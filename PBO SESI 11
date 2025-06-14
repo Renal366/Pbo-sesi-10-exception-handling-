@@ -27,3 +27,62 @@ public class CSVReader {
         }
     }
 }
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class CSVWriter {
+    public static void main(String[] args) {
+        String csvFile = "D:\\new_students.csv";
+        
+        // Get user input
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter student data (format: NIM,NAMA,UMUR,PRODI)");
+        System.out.println("Enter 'exit' to finish");
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))) {
+            String input;
+            while (true) {
+                System.out.print("Enter student data: ");
+                input = scanner.nextLine();
+                if (input.equalsIgnoreCase("exit")) {
+                    break;
+                }
+                bw.write(input);
+                bw.newLine();
+            }
+            System.out.println("Data written to " + csvFile);
+        } catch (IOException e) {
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class CSVCopy {
+    public static void main(String[] args) {
+        String sourceFile = "D:\\students.csv";
+        String destFile = "D:\\students_copy.csv";
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(sourceFile));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(destFile))) {
+            
+            String line;
+            while ((line = br.readLine()) != null) {
+                bw.write(line);
+                bw.newLine();
+            }
+            System.out.println("File copied successfully from " + 
+                              sourceFile + " to " + destFile);
+        } catch (IOException e) {
+        }
+    }
+}
