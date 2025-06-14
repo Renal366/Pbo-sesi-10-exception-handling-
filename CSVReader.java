@@ -1,0 +1,29 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class CSVReader {
+    public static void main(String[] args) {
+        String csvFile = "D:\\students.csv";  // Fixed path with escaped backslash
+        String line;
+        String csvSplitBy = ",";
+        int lineCount = 0;
+        
+        System.out.println("NIM, NAMA, UMUR, PRODI");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                lineCount++;
+                if(lineCount > 1) {  // Skip header line
+                    String[] student = line.split(csvSplitBy);
+                    if(student.length >= 4) {  // Check array bounds
+                        System.out.println(student[0] + ", " + student[1] + ", " + 
+                                         student[2] + ", " + student[3]);
+                    }
+                }
+            }
+            System.out.println("\nTotal lines in file: " + lineCount);
+        } catch (IOException e) {
+        }
+    }
+}
